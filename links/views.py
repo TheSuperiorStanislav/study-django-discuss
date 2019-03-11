@@ -3,9 +3,10 @@ from django.urls import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views.generic import (
+    View,
     CreateView,
     DetailView,
-    TemplateView    
+    TemplateView,    
 )
 
 from links.models import Link, Comment
@@ -125,3 +126,16 @@ class NewCommentReplyView(CreateView):
 
         return initial_data
 
+class UpvoteSubmissionView(View):
+    def get(self, request, pk, **kwargs):
+        link = Link.objects.get(pk = pk)
+        link.upvotes.add(request.user)
+
+        return HttpResponseRedirect(reverse('home'))
+
+class RemoveUpvoteSubmissionView(View):
+    def get(self, request, pk, **kwargs):
+        link = Link.objects.get(pk = pk)
+        link.upvotes.remove(request.user)
+
+        return HttpResponseRedirect(reverse('home'))

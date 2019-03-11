@@ -5,6 +5,11 @@
     <ul>
         {% for submission in submissions %}
         <li>
+            {% if request.user in submission.upvotes.all %}
+                <a href="{% url 'remove-upvote' submission.pk %}">Remove Upvote</a>
+            {% else %}
+                <a href="{% url 'upvote-submission' submission.pk %}">Upvote</a>
+            {% endif %}
             <a href="{{ submission.url}}" target="blank">{{ submission.title }}</a>
             <i><a href="{% url 'submission-detail' submission.pk %}">Comments</a></i>
         </li>

@@ -10,7 +10,9 @@ from links.views import (
     NewSubmissionView,
     SubmissionDetailView,
     NewCommentView,
-    NewCommentReplyView
+    NewCommentReplyView,
+    UpvoteSubmissionView,
+    RemoveUpvoteSubmissionView,
 )
 
 urlpatterns = [
@@ -26,4 +28,6 @@ urlpatterns = [
     path('submission/<int:pk>/', SubmissionDetailView.as_view(), name='submission-detail'),
     path('new-comment/', NewCommentView.as_view(), name='new-comment'),
     path('new-comment-reply/', NewCommentReplyView.as_view(), name='new-comment-reply'),
+    path('upvote/<int:pk>/', UpvoteSubmissionView.as_view(), name='upvote-submission'),
+    path('upvote/<int:pk>/remove/', RemoveUpvoteSubmissionView.as_view(), name='remove-upvote'),
 ]
