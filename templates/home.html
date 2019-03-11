@@ -2,4 +2,12 @@
 
 {% block content %}
     <h1>Welcome to Discuss</h1>
+    <ul>
+        {% for submission in submissions %}
+        <li>
+            <a href="{{ submission.url}}" target="blank">{{ submission.title }}</a>
+            <i><a href="{% url 'submission-detail' submission.pk %}">Comments</a></i>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

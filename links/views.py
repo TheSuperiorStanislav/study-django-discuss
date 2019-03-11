@@ -2,12 +2,25 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http.response import HttpResponseRedirect
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, DetailView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    TemplateView    
+)
 
 from links.models import Link, Comment
 from links.forms import CommentModelForm
 
 # Create your views here.
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(HomeView, self).get_context_data(**kwargs)
+        ctx['submissions'] = Link.objects.all()
+        return ctx
+
+
 class NewSubmissionView(CreateView):
     model = Link
     fields = (
