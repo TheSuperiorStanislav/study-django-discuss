@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1><a href="{{ object.url }}" target="blank">{{ object.title }}</a></h1>
+    <p>Submitted by: <b>{{ object.submitted_by.username }}</b></p>
+    <p>Submitted on: <b>{{ object.submitted_on }}</b></p>
+{% endblock content %}
