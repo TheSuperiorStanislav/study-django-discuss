@@ -8,7 +8,8 @@ from accounts.views import UserRegistrationView
 from links.views import (
     NewSubmissionView,
     SubmissionDetailView,
-    NewCommentView
+    NewCommentView,
+    NewCommentReplyView
 )
 
 urlpatterns = [
@@ -22,5 +23,6 @@ urlpatterns = [
 
     path('new-submission/', NewSubmissionView.as_view(), name='new-submission'),
     path('submission/<int:pk>/', SubmissionDetailView.as_view(), name='submission-detail'),
-    path('new-comment', NewCommentView.as_view(), name='new-comment'),
+    path('new-comment/', NewCommentView.as_view(), name='new-comment'),
+    path('new-comment-reply/', NewCommentReplyView.as_view(), name='new-comment-reply'),
 ]

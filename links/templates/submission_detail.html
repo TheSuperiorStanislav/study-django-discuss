@@ -15,7 +15,19 @@
         <b>Comments</b>
         <ul>
             {% for comment in comments %}
-                <li>{{comment.commented_by}} says: {{ comment.body }}</li>
+                <li>
+                    {{comment.commented_by}} says: {{ comment.body }}
+                    (<a href="{% url 'new-comment-reply' %}?link_pk={{ object.pk }}&parent_comment_pk={{ comment.pk }}">Reply</a>)
+                    {% if comment.comment_set.exists %}
+                        <ul>
+                            {% for reply in comment.comment_set.all %}
+                            <li>
+                                {{reply.commented_by}} says: {{ reply.body }}
+                            </li>
+                            {%endfor%}
+                        </ul>
+                    {% endif %}
+                </li>
             {%endfor%}
         </ul>
     </p>

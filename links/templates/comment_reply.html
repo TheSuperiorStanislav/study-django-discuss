@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Reply To Comment</h1>
+    <p>
+        <b>You are replying on:</b>
+        <i>{{ parent_comment.body }}</i>
+    </p>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Post Reply">
+    </form>
+
+{% endblock content %}
