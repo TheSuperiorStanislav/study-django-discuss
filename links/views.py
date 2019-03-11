@@ -1,13 +1,14 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from django.http.response import HttpResponseRedirect
-from django.utils.decorators import method_decorator
 from django.views.generic import (
     View,
     CreateView,
     DetailView,
     TemplateView,    
 )
+from django.urls import reverse
+from django.utils import timezone
+from django.utils.decorators import method_decorator
 
 from links.models import Link, Comment
 from links.forms import CommentModelForm
@@ -18,7 +19,17 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(HomeView, self).get_context_data(**kwargs)
-        ctx['submissions'] = Link.objects.all()
+        now = timezone.now()
+        submissions = Link.objects.all()
+        for submission in submissions:
+            num_votes = submission.upvotes.count()
+            num_commments = submission.comment_set.count()
+
+            num_days = (now - submission.submitted_on).days
+            submission.rank = num_votes + num_commments - num_days
+        
+        sorted_submissons = sorted(submissions, key = lambda x: x.rank, reverse = True)
+        ctx['submissions'] = sorted_submissons
         return ctx
 
 
